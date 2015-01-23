@@ -14,6 +14,7 @@ extends PerformanceTest.Microbenchmark {
         mySum_(0, list)
     }
 
+    /*
     val ranges = for {
         //size <- Gen.range("size")(300000, 1500000, 300000)
         size <- Gen.range("size")(3000, 15000, 3000)
@@ -24,9 +25,9 @@ extends PerformanceTest.Microbenchmark {
             _.map(_ + 1)
         }
     }
+    */
 
     val list = for {
-        //Gen.enumeration[T](axis: String)(xs: T*) 
         size <- Gen.enumeration("list")(List(1,2,3,4,5), List(2,1,2,3,4,5,6,3,2,4,5,6,3,2,34,4,5,3,4,5,3,2,34))
     } yield List(0)
 
