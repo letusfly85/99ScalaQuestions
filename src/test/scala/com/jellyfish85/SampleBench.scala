@@ -14,26 +14,30 @@ extends PerformanceTest.Microbenchmark {
         mySum_(0, list)
     }
 
-    /*
-    val ranges = for {
-        //size <- Gen.range("size")(300000, 1500000, 300000)
-        size <- Gen.range("size")(3000, 15000, 3000)
-    } yield 0 until size
-
-    measure method "map" in {
-        using(ranges) curve("Range") in {
-            _.map(_ + 1)
+    def pack[T](list: List[T]):List[List[T]] = {
+        def recur(elem: T, acc: List[List[T]]): List[List[T]] = {
+            acc match {
+                case x :: xs if (elem == x(0)) => (elem::x) :: acc.drop(1)
+                case _ => List(elem) :: acc
+            }
         }
-    }
-    */
 
-    val list = for {
-        size <- Gen.enumeration("list")(List(1,2,3,4,5), List(2,1,2,3,4,5,6,3,2,4,5,6,3,2,34,4,5,3,4,5,3,2,34))
-    } yield List(0)
+        var initList: List[List[T]] = List()
+        list.foldRight(initList)((elem, acc) => recur(elem, acc))
+    }
+
+   val sizes = Gen.range("size")(0, 10000, 1000)
+   val lists = for (sz <- sizes) yield (0 until sz).toList
 
     measure method "mySum" in {
-        using(list) curve("List") in {
+        using(lists) in {
             mySum(_)
+        }
+    }
+
+    measure method "pack" in {
+        using(lists) in {
+            pack(_)
         }
     }
 }
