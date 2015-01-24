@@ -1,10 +1,7 @@
-object P09 {
+package com.jellyfish85
 
-    def main(args: Array[String]) {
-        val list = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-        println(list.drop(1))
-        println(pack(list))
-    }
+@serializable
+class P09 {
 
     /*
     def pack[T](list: List[T]):List[(Int, T)] = {
