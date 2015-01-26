@@ -2,11 +2,6 @@ package com.jellyfish85
 
 @serializable
 class P10 {
-    def run() {
-        val list = List('a, 'a, 'b, 'b, 'b, 'c, 'd, 'd, 'e, 'e, 'e, 'e)
-        println(encode2(list))
-    }
-
     def encode[T](list: List[T]):List[(Int, T)] = {
         def recur(elem: T, acc: List[(Int, T)]): List[(Int, T)] = {
             acc match {
